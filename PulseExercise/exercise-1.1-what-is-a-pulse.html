@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>exercise-1.1-what-is-a-pulse.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="exercise-11-what-is-a-pulse">Exercise 1.1: What is a Pulse?</h1>
+<p><strong>⏱️ Time</strong>: 15 minutes<br>
+<strong>📚 Level</strong>: 1 - Pulse Basics<br>
+<strong>🎯 Prerequisite</strong>: None (start here!)</p>
+<hr>
+<h2 id="%F0%9F%8E%AF-what-youll-learn">🎯 What You'll Learn</h2>
+<ul>
+<li>What a Pulse is in the Intention Space model</li>
+<li>The three parts of a Pulse: Prompt, Response, Trivalence</li>
+<li>How to structure pulse responses (simple vs structured)</li>
+<li>Using helper functions to work with pulses</li>
+<li>Why Pulses are the foundation of everything</li>
+</ul>
+<hr>
+<h2 id="%F0%9F%8C%8D-real-world-example-a-restaurant-menu-item">🌍 Real-World Example: A Restaurant Menu Item</h2>
+<p>Imagine you're ordering food at a restaurant. You ask:</p>
+<p><strong>Question</strong>: &quot;What dish would you like?&quot;</p>
+<p>The menu item can give you different <strong>information</strong>:</p>
+<ul>
+<li>Dish name: &quot;Vegetable Biryani&quot;</li>
+<li>Price: &quot;$12.99&quot;</li>
+<li>Chef: &quot;Kumar&quot;</li>
+<li>Cook time: &quot;30 minutes&quot;</li>
+</ul>
+<p>In Intention Space, this question-and-answer bundle is called a <strong>Pulse</strong>.</p>
+<hr>
+<hr>
+<h2 id="%F0%9F%93%96-understanding-a-pulse">📖 Understanding a Pulse</h2>
+<p>A <strong>Pulse</strong> is the smallest unit of data in Intention Space. It has three parts:</p>
+<h3 id="1-prompt-the-questionidentifier">1. <strong>Prompt</strong> (The Question/Identifier)</h3>
+<p>A unique name that identifies what this data represents.</p>
+<p>Example prompts:</p>
+<ul>
+<li><code>&quot;light_switch_state&quot;</code></li>
+<li><code>&quot;user_name&quot;</code></li>
+<li><code>&quot;dish_selected&quot;</code></li>
+</ul>
+<h3 id="2-response-the-answerdata">2. <strong>Response</strong> (The Answer/Data)</h3>
+<p>The actual data value(s). Can be:</p>
+<ul>
+<li>A simple single value: <code>[&quot;on&quot;]</code></li>
+<li>Structured data with multiple fields (using META rows)</li>
+</ul>
+<h3 id="3-trivalence-the-state">3. <strong>Trivalence</strong> (The State)</h3>
+<p>Tells us HOW this data can be used. Three possible values:</p>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Meaning</th>
+<th>Color</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>&quot;Y&quot;</code></td>
+<td><strong>Yes</strong> - Editable</td>
+<td>🟢 Green</td>
+<td>User can change this</td>
+</tr>
+<tr>
+<td><code>&quot;N&quot;</code></td>
+<td><strong>No</strong> - Read-only</td>
+<td>🔴 Red</td>
+<td>Display only, cannot change</td>
+</tr>
+<tr>
+<td><code>&quot;UN&quot;</code></td>
+<td><strong>Unknown</strong> - Action</td>
+<td>🟠 Orange</td>
+<td>Button/action to trigger</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="%F0%9F%92%BB-pulse-types">💻 Pulse Types</h2>
+<h3 id="type-1-simple-pulse-single-value">Type 1: Simple Pulse (Single Value)</h3>
+<p>When you only need one piece of data:</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// A light switch pulse</span>
+<span class="hljs-keyword">const</span> lightSwitch = {
+  <span class="hljs-attr">prompt</span>: <span class="hljs-string">"light_switch_state"</span>,
+  <span class="hljs-attr">responses</span>: [<span class="hljs-string">"on"</span>],           <span class="hljs-comment">// Simple single value</span>
+  <span class="hljs-attr">trivalence</span>: <span class="hljs-string">"Y"</span>              <span class="hljs-comment">// User can toggle it</span>
+};
+</div></code></pre>
+<p><strong>Structure</strong>: <code>responses: [&quot;value&quot;]</code> - just an array with one string.</p>
+<h3 id="type-2-structured-pulse-multiple-fields">Type 2: Structured Pulse (Multiple Fields)</h3>
+<p>When you need multiple related pieces of data:</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// A restaurant dish pulse</span>
+<span class="hljs-keyword">const</span> dishSelected = {
+  <span class="hljs-attr">prompt</span>: <span class="hljs-string">"dish_selected"</span>,
+  <span class="hljs-attr">responses</span>: [
+    [<span class="hljs-string">"META"</span>, <span class="hljs-string">"name"</span>, <span class="hljs-string">"price"</span>, <span class="hljs-string">"chef"</span>, <span class="hljs-string">"cook_time"</span>],  <span class="hljs-comment">// Field names</span>
+    [<span class="hljs-string">"Vegetable Biryani"</span>, <span class="hljs-string">"$12.99"</span>, <span class="hljs-string">"Kumar"</span>, <span class="hljs-string">"30 min"</span>]  <span class="hljs-comment">// Field values</span>
+  ],
+  <span class="hljs-attr">trivalence</span>: <span class="hljs-string">"Y"</span>
+};
+</div></code></pre>
+<p><strong>Structure</strong>:</p>
+<ul>
+<li>First row: <code>[&quot;META&quot;, field1, field2, ...]</code> - defines the structure</li>
+<li>Second row: <code>[value1, value2, ...]</code> - the actual data</li>
+<li>All values are <strong>strings</strong></li>
+</ul>
+<p><strong>Think of it like a mini spreadsheet</strong>:</p>
+<pre class="hljs"><code><div>| name              | price   | chef  | cook_time |
+|-------------------|---------|-------|-----------|
+| Vegetable Biryani | $12.99  | Kumar | 30 min    |
+</div></code></pre>
+<hr>
+<h2 id="%F0%9F%94%A7-helper-functions">🔧 Helper Functions</h2>
+<p>To work with pulses easily, we use helper functions:</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// ============================================================</span>
+<span class="hljs-comment">// PULSE HELPER FUNCTIONS</span>
+<span class="hljs-comment">// ============================================================</span>
+
+<span class="hljs-comment">/**
+ * Check if a pulse is simple (single value)
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isSimplePulse</span>(<span class="hljs-params">pulse</span>) </span>{
+  <span class="hljs-keyword">return</span> pulse.responses.length === <span class="hljs-number">1</span> &amp;&amp; 
+         !<span class="hljs-built_in">Array</span>.isArray(pulse.responses[<span class="hljs-number">0</span>]);
+}
+
+<span class="hljs-comment">/**
+ * Check if a pulse is structured (has META rows)
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">isStructuredPulse</span>(<span class="hljs-params">pulse</span>) </span>{
+  <span class="hljs-keyword">return</span> pulse.responses.length &gt; <span class="hljs-number">0</span> &amp;&amp;
+         <span class="hljs-built_in">Array</span>.isArray(pulse.responses[<span class="hljs-number">0</span>]) &amp;&amp;
+         pulse.responses[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] === <span class="hljs-string">"META"</span>;
+}
+
+<span class="hljs-comment">/**
+ * Get value from simple pulse
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getSimpleValue</span>(<span class="hljs-params">pulse</span>) </span>{
+  <span class="hljs-keyword">if</span> (!isSimplePulse(pulse)) {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Not a simple pulse"</span>);
+  }
+  <span class="hljs-keyword">return</span> pulse.responses[<span class="hljs-number">0</span>];
+}
+
+<span class="hljs-comment">/**
+ * Get a specific field value from structured pulse
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">getFieldValue</span>(<span class="hljs-params">pulse, fieldName</span>) </span>{
+  <span class="hljs-keyword">if</span> (!isStructuredPulse(pulse)) {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Not a structured pulse"</span>);
+  }
+  
+  <span class="hljs-comment">// responses[0] is ["META", field1, field2, ...]</span>
+  <span class="hljs-comment">// responses[1] is [value1, value2, ...]</span>
+  
+  <span class="hljs-keyword">const</span> meta = pulse.responses[<span class="hljs-number">0</span>];
+  <span class="hljs-keyword">const</span> data = pulse.responses[<span class="hljs-number">1</span>];
+  
+  <span class="hljs-comment">// Find which position this field is in</span>
+  <span class="hljs-keyword">const</span> fieldIndex = meta.indexOf(fieldName);
+  
+  <span class="hljs-keyword">if</span> (fieldIndex === <span class="hljs-number">-1</span> || fieldIndex === <span class="hljs-number">0</span>) {
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;  <span class="hljs-comment">// Field not found (index 0 is "META")</span>
+  }
+  
+  <span class="hljs-keyword">return</span> data[fieldIndex - <span class="hljs-number">1</span>];  <span class="hljs-comment">// -1 because meta has "META" at index 0</span>
+}
+
+<span class="hljs-comment">/**
+ * Convert structured pulse to a JavaScript object
+ */</span>
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">toObject</span>(<span class="hljs-params">pulse</span>) </span>{
+  <span class="hljs-keyword">if</span> (!isStructuredPulse(pulse)) {
+    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(<span class="hljs-string">"Not a structured pulse"</span>);
+  }
+  
+  <span class="hljs-keyword">const</span> meta = pulse.responses[<span class="hljs-number">0</span>].slice(<span class="hljs-number">1</span>);  <span class="hljs-comment">// Remove "META"</span>
+  <span class="hljs-keyword">const</span> data = pulse.responses[<span class="hljs-number">1</span>];
+  
+  <span class="hljs-keyword">const</span> obj = {};
+  meta.forEach(<span class="hljs-function">(<span class="hljs-params">field, idx</span>) =&gt;</span> {
+    obj[field] = data[idx];
+  });
+  
+  <span class="hljs-keyword">return</span> obj;
+}
+</div></code></pre>
+<hr>
+<h2 id="%F0%9F%8E%A8-examples-with-helper-functions">🎨 Examples with Helper Functions</h2>
+<h3 id="example-1-simple-pulse">Example 1: Simple Pulse</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> lightSwitch = {
+  <span class="hljs-attr">prompt</span>: <span class="hljs-string">"light_switch_state"</span>,
+  <span class="hljs-attr">responses</span>: [<span class="hljs-string">"on"</span>],
+  <span class="hljs-attr">trivalence</span>: <span class="hljs-string">"Y"</span>
+};
+
+<span class="hljs-comment">// Check type</span>
+<span class="hljs-built_in">console</span>.log(isSimplePulse(lightSwitch));  <span class="hljs-comment">// true</span>
+<span class="hljs-built_in">console</span>.log(isStructuredPulse(lightSwitch));  <span class="hljs-comment">// false</span>
+
+<span class="hljs-comment">// Get value</span>
+<span class="hljs-keyword">const</span> state = getSimpleValue(lightSwitch);
+<span class="hljs-built_in">console</span>.log(state);  <span class="hljs-comment">// "on"</span>
+</div></code></pre>
+<h3 id="example-2-structured-pulse">Example 2: Structured Pulse</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> dish = {
+  <span class="hljs-attr">prompt</span>: <span class="hljs-string">"dish_selected"</span>,
+  <span class="hljs-attr">responses</span>: [
+    [<span class="hljs-string">"META"</span>, <span class="hljs-string">"name"</span>, <span class="hljs-string">"price"</span>, <span class="hljs-string">"chef"</span>, <span class="hljs-string">"cook_time"</span>],
+    [<span class="hljs-string">"Vegetable Biryani"</span>, <span class="hljs-string">"$12.99"</span>, <span class="hljs-string">"Kumar"</span>, <span class="hljs-string">"30 min"</span>]
+  ],
+  <span class="hljs-attr">trivalence</span>: <span class="hljs-string">"Y"</span>
+};
+
+<span class="hljs-comment">// Check type</span>
+<span class="hljs-built_in">console</span>.log(isSimplePulse(dish));  <span class="hljs-comment">// false</span>
+<span class="hljs-built_in">console</span>.log(isStructuredPulse(dish));  <span class="hljs-comment">// true</span>
+
+<span class="hljs-comment">// Get specific fields</span>
+<span class="hljs-keyword">const</span> dishName = getFieldValue(dish, <span class="hljs-string">"name"</span>);
+<span class="hljs-built_in">console</span>.log(dishName);  <span class="hljs-comment">// "Vegetable Biryani"</span>
+
+<span class="hljs-keyword">const</span> price = getFieldValue(dish, <span class="hljs-string">"price"</span>);
+<span class="hljs-built_in">console</span>.log(price);  <span class="hljs-comment">// "$12.99"</span>
+
+<span class="hljs-keyword">const</span> chef = getFieldValue(dish, <span class="hljs-string">"chef"</span>);
+<span class="hljs-built_in">console</span>.log(chef);  <span class="hljs-comment">// "Kumar"</span>
+
+<span class="hljs-comment">// Convert to object</span>
+<span class="hljs-keyword">const</span> dishObj = toObject(dish);
+<span class="hljs-built_in">console</span>.log(dishObj);
+<span class="hljs-comment">// {</span>
+<span class="hljs-comment">//   name: "Vegetable Biryani",</span>
+<span class="hljs-comment">//   price: "$12.99",</span>
+<span class="hljs-comment">//   chef: "Kumar",</span>
+<span class="hljs-comment">//   cook_time: "30 min"</span>
+<span class="hljs-comment">// }</span>
+</div></code></pre>
+<hr>
+<h2 id="%F0%9F%94%A7-your-turn-create-your-first-pulses">🔧 Your Turn: Create Your First Pulses</h2>
+<h3 id="step-1-create-helper-functions-file">Step 1: Create Helper Functions File</h3>
+<p>Create a file called <code>pulse-helpers.js</code> and copy the helper functions above.</p>
+<h3 id="step-2-create-your-pulses">Step 2: Create Your Pulses</h3>
+<p>Create a file called <code>my-first-pulses.js</code>:</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// my-first-pulses.js</span>
+
+<span class="hljs-comment">// 🔧 <span class="hljs-doctag">TODO:</span> Copy helper functions here or import them</span>
+<span class="hljs-comment">// (For now, just copy-paste them at the top of this file)</span>
+
+<span class="hljs-comment">// ============================================================</span>
+<span class="hljs-comment">// YOUR PULSES</span>
+<span class="hljs-comment">// ============================================================</span>
+
+<span class="hljs-comment">// 🔧 TASK 1: Create a simple pulse for a door lock</span>
+<span class="hljs-keyword">const</span> doorLock = {
+  <span class="hljs-attr">prompt</span>: <span class="hljs-string">""</span>,           <span class="hljs-comment">// 🔧 <span class="hljs-doctag">TODO:</span> Give it a name like "door_lock_state"</span>
+  <span class="hljs-attr">responses</span>: [],        <span class="hljs-comment">// 🔧 <span class="hljs-doctag">TODO:</span> Is it "locked" or "unlocked"?</span>
+  <span class="hljs-attr">trivalence</span>: <span class="hljs-string">""</span>        <span class="hljs-comment">// 🔧 <span class="hljs-doctag">TODO:</span> Can we change it? (Y/N/UN)</span>
+};
+
+<span class="hljs-comment">// 🔧 TASK 2: Create a structured pulse for a book</span>
+<span class="hljs-keyword">const</span> bookInfo = {
+  <span class="hljs-attr">prompt</span>: <span class="hljs-string">""</span>,           <span class="hljs-comment">// 🔧 <span class="hljs-doctag">TODO:</span> Name it "book_info"</span>
+  <span class="hljs-attr">responses</span>: [
+    [],                 <span class="hljs-comment">// 🔧 <span class="hljs-doctag">TODO:</span> META row with fields: title, author, year, price</span>
+    []                  <span class="hljs-comment">// 🔧 <span class="hljs-doctag">TODO:</span> Data row with your favorite book info</span>
+  ],
+  <span class="hljs-attr">trivalence</span>: <span class="hljs-string">""</span>        <span class="hljs-comment">// 🔧 <span class="hljs-doctag">TODO:</span> Can we edit book info?</span>
+};
+
+<span class="hljs-comment">// ============================================================</span>
+<span class="hljs-comment">// TEST YOUR PULSES</span>
+<span class="hljs-comment">// ============================================================</span>
+
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"=== DOOR LOCK ==="</span>);
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Is simple?"</span>, isSimplePulse(doorLock));
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Value:"</span>, getSimpleValue(doorLock));
+
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"\n=== BOOK INFO ==="</span>);
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Is structured?"</span>, isStructuredPulse(bookInfo));
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Title:"</span>, getFieldValue(bookInfo, <span class="hljs-string">"title"</span>));
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Author:"</span>, getFieldValue(bookInfo, <span class="hljs-string">"author"</span>));
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"As object:"</span>, toObject(bookInfo));
+</div></code></pre>
+<h3 id="step-3-complete-the-solution">Step 3: Complete the Solution</h3>
+<details>
+<summary>Click to see the solution</summary>
+<pre class="hljs"><code><div><span class="hljs-comment">// my-first-pulses.js</span>
+<span class="hljs-comment">// ✅ COMPLETE SOLUTION</span>
+
+<span class="hljs-comment">// [Helper functions here - copy from above]</span>
+
+<span class="hljs-comment">// ============================================================</span>
+<span class="hljs-comment">// YOUR PULSES</span>
+<span class="hljs-comment">// ============================================================</span>
+
+<span class="hljs-comment">// Task 1: Simple pulse for door lock</span>
+<span class="hljs-keyword">const</span> doorLock = {
+  <span class="hljs-attr">prompt</span>: <span class="hljs-string">"door_lock_state"</span>,
+  <span class="hljs-attr">responses</span>: [<span class="hljs-string">"locked"</span>],
+  <span class="hljs-attr">trivalence</span>: <span class="hljs-string">"Y"</span>  <span class="hljs-comment">// User can lock/unlock</span>
+};
+
+<span class="hljs-comment">// Task 2: Structured pulse for a book</span>
+<span class="hljs-keyword">const</span> bookInfo = {
+  <span class="hljs-attr">prompt</span>: <span class="hljs-string">"book_info"</span>,
+  <span class="hljs-attr">responses</span>: [
+    [<span class="hljs-string">"META"</span>, <span class="hljs-string">"title"</span>, <span class="hljs-string">"author"</span>, <span class="hljs-string">"year"</span>, <span class="hljs-string">"price"</span>],
+    [<span class="hljs-string">"1984"</span>, <span class="hljs-string">"George Orwell"</span>, <span class="hljs-string">"1949"</span>, <span class="hljs-string">"$15.99"</span>]
+  ],
+  <span class="hljs-attr">trivalence</span>: <span class="hljs-string">"N"</span>  <span class="hljs-comment">// Book info is read-only</span>
+};
+
+<span class="hljs-comment">// ============================================================</span>
+<span class="hljs-comment">// TEST YOUR PULSES</span>
+<span class="hljs-comment">// ============================================================</span>
+
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"=== DOOR LOCK ==="</span>);
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Is simple?"</span>, isSimplePulse(doorLock));  <span class="hljs-comment">// true</span>
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Value:"</span>, getSimpleValue(doorLock));  <span class="hljs-comment">// "locked"</span>
+
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"\n=== BOOK INFO ==="</span>);
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Is structured?"</span>, isStructuredPulse(bookInfo));  <span class="hljs-comment">// true</span>
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Title:"</span>, getFieldValue(bookInfo, <span class="hljs-string">"title"</span>));  <span class="hljs-comment">// "1984"</span>
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Author:"</span>, getFieldValue(bookInfo, <span class="hljs-string">"author"</span>));  <span class="hljs-comment">// "George Orwell"</span>
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"As object:"</span>, toObject(bookInfo));
+<span class="hljs-comment">// {</span>
+<span class="hljs-comment">//   title: "1984",</span>
+<span class="hljs-comment">//   author: "George Orwell",</span>
+<span class="hljs-comment">//   year: "1949",</span>
+<span class="hljs-comment">//   price: "$15.99"</span>
+<span class="hljs-comment">// }</span>
+</div></code></pre>
+</details>
+<hr>
+<h2 id="%E2%9C%85-check-your-understanding">✅ Check Your Understanding</h2>
+<p><strong>Question 1</strong>: What are the three parts of a Pulse?</p>
+<details>
+<summary>Click to reveal answer</summary>
+<ol>
+<li><strong>Prompt</strong> - the question/identifier</li>
+<li><strong>Response</strong> - the answer(s)/data</li>
+<li><strong>Trivalence</strong> - the state (Y/N/UN)</li>
+</ol>
+</details>
+<p><strong>Question 2</strong>: When should you use a structured pulse instead of a simple pulse?</p>
+<details>
+<summary>Click to reveal answer</summary>
+<p>Use a <strong>structured pulse</strong> when you need multiple related pieces of data that belong together (like dish name + price + chef). Use a <strong>simple pulse</strong> when you only need a single value (like &quot;on&quot; or &quot;off&quot;).</p>
+</details>
+<p><strong>Question 3</strong>: What does the META row do?</p>
+<details>
+<summary>Click to reveal answer</summary>
+<p>The META row defines the <strong>field names</strong> (column headers) for the data. It tells you what each value in the data row represents.</p>
+<p>Example:</p>
+<pre class="hljs"><code><div>[<span class="hljs-string">"META"</span>, <span class="hljs-string">"name"</span>, <span class="hljs-string">"price"</span>]  <span class="hljs-comment">// Defines: first value is name, second is price</span>
+[<span class="hljs-string">"Biryani"</span>, <span class="hljs-string">"$12.99"</span>]      <span class="hljs-comment">// Data: name="Biryani", price="$12.99"</span>
+</div></code></pre>
+</details>
+<hr>
+<h2 id="%F0%9F%8E%AF-practice-challenge">🎯 Practice Challenge</h2>
+<h3 id="challenge-1-traffic-light">Challenge 1: Traffic Light</h3>
+<p>Create a simple pulse for a traffic light:</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// 🔧 YOUR TASK: Create a pulse for a traffic light</span>
+<span class="hljs-comment">// Hint: Current color is "red"</span>
+<span class="hljs-comment">// Hint: Traffic lights change automatically (not by user)</span>
+
+<span class="hljs-keyword">const</span> trafficLight = {
+  <span class="hljs-attr">prompt</span>: <span class="hljs-string">""</span>,       <span class="hljs-comment">// 🔧 TODO</span>
+  <span class="hljs-attr">responses</span>: [],    <span class="hljs-comment">// 🔧 TODO</span>
+  <span class="hljs-attr">trivalence</span>: <span class="hljs-string">""</span>    <span class="hljs-comment">// 🔧 TODO</span>
+};
+
+<span class="hljs-comment">// Test it</span>
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Traffic light color:"</span>, getSimpleValue(trafficLight));
+</div></code></pre>
+<details>
+<summary>Solution</summary>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> trafficLight = {
+  <span class="hljs-attr">prompt</span>: <span class="hljs-string">"traffic_light_color"</span>,
+  <span class="hljs-attr">responses</span>: [<span class="hljs-string">"red"</span>],
+  <span class="hljs-attr">trivalence</span>: <span class="hljs-string">"N"</span>   <span class="hljs-comment">// User cannot change traffic light!</span>
+};
+
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Traffic light color:"</span>, getSimpleValue(trafficLight));
+<span class="hljs-comment">// "red"</span>
+</div></code></pre>
+</details>
+<h3 id="challenge-2-shopping-cart-item">Challenge 2: Shopping Cart Item</h3>
+<p>Create a structured pulse for a shopping cart item:</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// 🔧 YOUR TASK: Create a pulse for a cart item</span>
+<span class="hljs-comment">// Hint: Fields needed: product_id, name, quantity, price</span>
+<span class="hljs-comment">// Hint: Example item: ID="p001", Name="Laptop", Qty="1", Price="$999"</span>
+<span class="hljs-comment">// Hint: User can edit quantities</span>
+
+<span class="hljs-keyword">const</span> cartItem = {
+  <span class="hljs-attr">prompt</span>: <span class="hljs-string">""</span>,
+  <span class="hljs-attr">responses</span>: [
+    [],  <span class="hljs-comment">// 🔧 <span class="hljs-doctag">TODO:</span> META row</span>
+    []   <span class="hljs-comment">// 🔧 <span class="hljs-doctag">TODO:</span> Data row</span>
+  ],
+  <span class="hljs-attr">trivalence</span>: <span class="hljs-string">""</span>
+};
+
+<span class="hljs-comment">// Test it</span>
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Product:"</span>, getFieldValue(cartItem, <span class="hljs-string">"name"</span>));
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Quantity:"</span>, getFieldValue(cartItem, <span class="hljs-string">"quantity"</span>));
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"As object:"</span>, toObject(cartItem));
+</div></code></pre>
+<details>
+<summary>Solution</summary>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> cartItem = {
+  <span class="hljs-attr">prompt</span>: <span class="hljs-string">"cart_item"</span>,
+  <span class="hljs-attr">responses</span>: [
+    [<span class="hljs-string">"META"</span>, <span class="hljs-string">"product_id"</span>, <span class="hljs-string">"name"</span>, <span class="hljs-string">"quantity"</span>, <span class="hljs-string">"price"</span>],
+    [<span class="hljs-string">"p001"</span>, <span class="hljs-string">"Laptop"</span>, <span class="hljs-string">"1"</span>, <span class="hljs-string">"$999"</span>]
+  ],
+  <span class="hljs-attr">trivalence</span>: <span class="hljs-string">"Y"</span>  <span class="hljs-comment">// User can edit quantities</span>
+};
+
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Product:"</span>, getFieldValue(cartItem, <span class="hljs-string">"name"</span>));
+<span class="hljs-comment">// "Laptop"</span>
+
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Quantity:"</span>, getFieldValue(cartItem, <span class="hljs-string">"quantity"</span>));
+<span class="hljs-comment">// "1"</span>
+
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"As object:"</span>, toObject(cartItem));
+<span class="hljs-comment">// {</span>
+<span class="hljs-comment">//   product_id: "p001",</span>
+<span class="hljs-comment">//   name: "Laptop",</span>
+<span class="hljs-comment">//   quantity: "1",</span>
+<span class="hljs-comment">//   price: "$999"</span>
+<span class="hljs-comment">// }</span>
+</div></code></pre>
+</details>
+<h3 id="challenge-3-user-profile">Challenge 3: User Profile</h3>
+<p>Create a structured pulse for a user profile:</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// 🔧 YOUR TASK: Create a pulse for user profile</span>
+<span class="hljs-comment">// Hint: Fields: user_id, name, email, role</span>
+<span class="hljs-comment">// Hint: Make up your own data!</span>
+<span class="hljs-comment">// Hint: User can edit their profile</span>
+
+<span class="hljs-keyword">const</span> userProfile = {
+  <span class="hljs-attr">prompt</span>: <span class="hljs-string">""</span>,
+  <span class="hljs-attr">responses</span>: [
+    [],  <span class="hljs-comment">// 🔧 TODO</span>
+    []   <span class="hljs-comment">// 🔧 TODO</span>
+  ],
+  <span class="hljs-attr">trivalence</span>: <span class="hljs-string">""</span>
+};
+
+<span class="hljs-comment">// Test it with helper functions</span>
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"User:"</span>, getFieldValue(userProfile, <span class="hljs-string">"name"</span>));
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Email:"</span>, getFieldValue(userProfile, <span class="hljs-string">"email"</span>));
+</div></code></pre>
+<details>
+<summary>Solution</summary>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> userProfile = {
+  <span class="hljs-attr">prompt</span>: <span class="hljs-string">"user_profile"</span>,
+  <span class="hljs-attr">responses</span>: [
+    [<span class="hljs-string">"META"</span>, <span class="hljs-string">"user_id"</span>, <span class="hljs-string">"name"</span>, <span class="hljs-string">"email"</span>, <span class="hljs-string">"role"</span>],
+    [<span class="hljs-string">"u123"</span>, <span class="hljs-string">"Alice Smith"</span>, <span class="hljs-string">"alice@example.com"</span>, <span class="hljs-string">"admin"</span>]
+  ],
+  <span class="hljs-attr">trivalence</span>: <span class="hljs-string">"Y"</span>  <span class="hljs-comment">// User can edit their profile</span>
+};
+
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"User:"</span>, getFieldValue(userProfile, <span class="hljs-string">"name"</span>));
+<span class="hljs-comment">// "Alice Smith"</span>
+
+<span class="hljs-built_in">console</span>.log(<span class="hljs-string">"Email:"</span>, getFieldValue(userProfile, <span class="hljs-string">"email"</span>));
+<span class="hljs-comment">// "alice@example.com"</span>
+</div></code></pre>
+</details>
+<hr>
+<h2 id="%F0%9F%92%A1-key-takeaways">💡 Key Takeaways</h2>
+<p>After completing this exercise, you should understand:</p>
+<p>✅ <strong>A Pulse is a question-answer pair</strong> with a state indicator</p>
+<p>✅ <strong>Three parts</strong>:</p>
+<ul>
+<li>Prompt = unique identifier</li>
+<li>Response = data (simple or structured)</li>
+<li>Trivalence = usage indicator (Y/N/UN)</li>
+</ul>
+<p>✅ <strong>Two types of pulses</strong>:</p>
+<ul>
+<li>Simple: <code>responses: [&quot;value&quot;]</code></li>
+<li>Structured: <code>responses: [[&quot;META&quot;, ...], [data, ...]]</code></li>
+</ul>
+<p>✅ <strong>Helper functions</strong> make working with pulses easy:</p>
+<ul>
+<li><code>isSimplePulse()</code> / <code>isStructuredPulse()</code></li>
+<li><code>getSimpleValue()</code> / <code>getFieldValue()</code></li>
+<li><code>toObject()</code> for structured pulses</li>
+</ul>
+<p>✅ <strong>Pulses are self-describing</strong> - the META row tells you what each value means</p>
+<p>✅ <strong>All values are strings</strong> - the platform can parse them later if needed</p>
+<hr>
+<h2 id="%F0%9F%8E%A8-visual-summary">🎨 Visual Summary</h2>
+<pre class="hljs"><code><div>SIMPLE PULSE
+┌─────────────────────────────────────────┐
+│  Prompt: &quot;light_switch_state&quot;           │
+│  Response: [&quot;on&quot;]                       │
+│  Trivalence: &quot;Y&quot;                        │
+└─────────────────────────────────────────┘
+
+STRUCTURED PULSE (Think: Mini Spreadsheet)
+┌─────────────────────────────────────────────────────────┐
+│  Prompt: &quot;dish_selected&quot;                                │
+│  Response:                                              │
+│    [&quot;META&quot;, &quot;name&quot;, &quot;price&quot;, &quot;chef&quot;]  ← Column headers │
+│    [&quot;Biryani&quot;, &quot;$12.99&quot;, &quot;Kumar&quot;]     ← Data row       │
+│  Trivalence: &quot;Y&quot;                                        │
+└─────────────────────────────────────────────────────────┘
+</div></code></pre>
+<hr>
+<h2 id="%F0%9F%A7%AA-run-your-code">🧪 Run Your Code</h2>
+<p>To test your pulses:</p>
+<pre class="hljs"><code><div><span class="hljs-comment"># Save your code as my-first-pulses.js</span>
+<span class="hljs-comment"># Run it with Node.js</span>
+node my-first-pulses.js
+</div></code></pre>
+<hr>
+<h2 id="%F0%9F%93%9A-quick-reference-card">📚 Quick Reference Card</h2>
+<p>Keep this handy for future exercises:</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// Simple Pulse Template</span>
+<span class="hljs-keyword">const</span> simplePulse = {
+  <span class="hljs-attr">prompt</span>: <span class="hljs-string">"unique_identifier"</span>,
+  <span class="hljs-attr">responses</span>: [<span class="hljs-string">"value"</span>],
+  <span class="hljs-attr">trivalence</span>: <span class="hljs-string">"Y|N|UN"</span>
+};
+
+<span class="hljs-comment">// Structured Pulse Template</span>
+<span class="hljs-keyword">const</span> structuredPulse = {
+  <span class="hljs-attr">prompt</span>: <span class="hljs-string">"unique_identifier"</span>,
+  <span class="hljs-attr">responses</span>: [
+    [<span class="hljs-string">"META"</span>, <span class="hljs-string">"field1"</span>, <span class="hljs-string">"field2"</span>, <span class="hljs-string">"field3"</span>],
+    [<span class="hljs-string">"value1"</span>, <span class="hljs-string">"value2"</span>, <span class="hljs-string">"value3"</span>]
+  ],
+  <span class="hljs-attr">trivalence</span>: <span class="hljs-string">"Y|N|UN"</span>
+};
+
+<span class="hljs-comment">// Helper Functions Quick Guide</span>
+isSimplePulse(pulse)          <span class="hljs-comment">// true/false</span>
+isStructuredPulse(pulse)      <span class="hljs-comment">// true/false</span>
+getSimpleValue(pulse)         <span class="hljs-comment">// "value"</span>
+getFieldValue(pulse, <span class="hljs-string">"field"</span>) <span class="hljs-comment">// "value"</span>
+toObject(pulse)               <span class="hljs-comment">// { field1: "value1", ... }</span>
+
+<span class="hljs-comment">// Trivalence Quick Guide</span>
+<span class="hljs-string">"Y"</span>  = Editable (🟢 Green)
+<span class="hljs-string">"N"</span>  = Read-only (🔴 Red)
+<span class="hljs-string">"UN"</span> = Action (🟠 Orange)
+</div></code></pre>
+<hr>
+<h2 id="%E2%9E%A1%EF%B8%8F-next-exercise">➡️ Next Exercise</h2>
+<p>Now that you understand what a Pulse is and how to work with them, let's see how Pulses <strong>change over time</strong>.</p>
+<p><strong>Next</strong>: <a href="./exercise-1.2-pulses-change-over-time.md">Exercise 1.2: Pulses Change Over Time</a></p>
+<p>In the next exercise, you'll learn:</p>
+<ul>
+<li>How to update pulse responses</li>
+<li>When and why pulses change</li>
+<li>The lifecycle of a pulse</li>
+<li>Creating functions to modify pulses</li>
+</ul>
+<hr>
+<h2 id="%F0%9F%94%8D-bonus-behind-the-scenes">🔍 Bonus: Behind the Scenes</h2>
+<details>
+<summary>🤓 Why use META rows instead of JSON objects?</summary>
+<p><strong>Question</strong>: Why not just use JavaScript objects like this?</p>
+<pre class="hljs"><code><div>responses: {
+  <span class="hljs-attr">name</span>: <span class="hljs-string">"Biryani"</span>,
+  <span class="hljs-attr">price</span>: <span class="hljs-string">"$12.99"</span>
+}
+</div></code></pre>
+<p><strong>Answer</strong>: The Response Array Convention uses arrays because:</p>
+<ol>
+<li><strong>Platform Independent</strong>: Arrays work the same in all languages (JavaScript, Python, Go, etc.)</li>
+<li><strong>Multiple Records</strong>: Arrays easily support multiple rows of data</li>
+<li><strong>Ordered</strong>: Field order is preserved (objects don't guarantee order in all languages)</li>
+<li><strong>Simple Parsing</strong>: Easy to parse row-by-row (like CSV files)</li>
+<li><strong>Future-Proof</strong>: Can add more meta rows for different data structures</li>
+</ol>
+<p>The convention is designed to work across ALL platforms, not just JavaScript!</p>
+</details>
+<details>
+<summary>🤓 Why are all values strings?</summary>
+<p><strong>Question</strong>: Why store numbers as strings like <code>&quot;25&quot;</code> instead of <code>25</code>?</p>
+<p><strong>Answer</strong>:</p>
+<ol>
+<li><strong>Universal</strong>: Strings work everywhere (databases, files, network, any language)</li>
+<li><strong>Safe</strong>: No type conversion errors during data transfer</li>
+<li><strong>Flexible</strong>: Platform decides how to interpret (<code>&quot;25&quot;</code> → number, <code>&quot;true&quot;</code> → boolean)</li>
+<li><strong>Convention</strong>: The Response Array Convention defines the structure, not the types</li>
+</ol>
+<p>When you use the data, you can parse it:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">const</span> age = <span class="hljs-built_in">parseInt</span>(getFieldValue(pulse, <span class="hljs-string">"age"</span>));  <span class="hljs-comment">// "25" → 25</span>
+<span class="hljs-keyword">const</span> price = <span class="hljs-built_in">parseFloat</span>(getFieldValue(pulse, <span class="hljs-string">"price"</span>));  <span class="hljs-comment">// "$12.99" → ?</span>
+</div></code></pre>
+<p>This separation keeps the convention simple and universal!</p>
+</details>
+<hr>
+<p><strong>🎉 Congratulations!</strong> You've completed Exercise 1.1. You now understand:</p>
+<ul>
+<li>What Pulses are</li>
+<li>How to structure pulse responses</li>
+<li>How to use helper functions to work with pulses</li>
+</ul>
+<p><strong>You're ready for Exercise 1.2!</strong></p>
+<hr>
+<p><strong>Last Updated</strong>: December 22, 2024<br>
+<strong>Exercise Series</strong>: Intention Tunnel for Beginners<br>
+<strong>License</strong>: Educational use</p>
+
+</body>
+</html>
