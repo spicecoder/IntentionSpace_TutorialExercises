@@ -368,3 +368,6 @@ if (typeof window !== 'undefined') {
     validatePulse
   };
 }
+
+
+
