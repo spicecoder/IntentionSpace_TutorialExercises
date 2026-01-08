@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Exercise 4.3: CSV Aggregation</title>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    body { 
+      font-family: Arial, sans-serif; 
+      max-width: 1200px; 
+      margin: 50px auto;
+      padding: 20px;
+    }
+    .section {
+      border: 2px solid #ddd;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+    }
+    .kitchen { background-color: #fff3cd; }
+    .window { background-color: #e3f2fd; }
+    .server { background-color: #d4edda; }
+    
+    .pulse-box {
+      background: white;
+      padding: 12px;
+      margin: 8px 0;
+      border-left: 4px solid #2196F3;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+    }
+    
+    .pulse-name {
+      font-weight: bold;
+      color: #1976D2;
+    }
+    
+    .pulse-value {
+      color: #333;
+      background: #f5f5f5;
+      padding: 2px 6px;
+      border-radius: 3px;
+      margin-left: 8px;
+    }
+    
+    .csv-row {
+      background: #f5f5f5;
+      padding: 8px;
+      margin: 4px 0;
+      border-left: 3px solid #4CAF50;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+    }
+    
+    button {
+      background-color: #2196F3;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 5px;
+    }
+    button:hover { background-color: #1976D2; }
+    button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+    
+    .status-box {
+      background-color: #fff3e0;
+      border-left: 4px solid #ff9800;
+      padding: 15px;
+      margin: 15px 0;
+    }
+    
+    .held-count {
+      display: inline-block;
+      background: #ff9800;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-weight: bold;
+      margin-left: 10px;
+    }
+    
+    .operation-log {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 4px;
+      margin: 15px 0;
+      max-height: 300px;
+      overflow-y: auto;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+    }
+    
+    .log-entry {
+      margin: 4px 0;
+      padding: 4px;
+    }
+    
+    .log-entry.receive { color: #2196F3; }
+    .log-entry.aggregate { color: #4CAF50; }
+    .log-entry.reflect { color: #9C27B0; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    // ========================================
+    // Order Aggregation Object (CSV Pattern)
+    // ========================================
+    class OrderAggregator {
+      constructor() {
+        this.heldIntentions = [];
+        this.log = [];
+      }
+
+      // Receive an order (holds it)
+      receive(intention) {
+        this.heldIntentions.push(intention);
+        this.addLog('receive', `Received order: ${intention.pulses.item_dish} for ${intention.pulses.customer_name}`);
+      }
+
+      // Pure CSV aggregation
+      aggregateToCSV(intentions) {
+        this.addLog('aggregate', `Aggregating ${intentions.length} orders...`);
+        
+        const csvRows = intentions.map(intention => {
+          const { item_dish, customer_name, table_num } = intention.pulses;
+          // Build CSV row: "dish,customer,table"
+          return `${item_dish},${customer_name},${table_num}`;
+        });
+
+        // Join with newlines
+        const csvString = csvRows.join('\n');
+        
+        this.addLog('aggregate', `CSV result:\n${csvString}`);
+        
+        return csvString;
+      }
+
+      // Reflect: Process ALL held intentions
+      reflect(onReflected) {
+        if (this.heldIntentions.length === 0) {
+          return null;
+        }
+
+        this.addLog('reflect', `Processing ${this.heldIntentions.length} held intentions`);
+
+        // Extract table number (assume all same table for this demo)
+        const tableNum = this.heldIntentions[0].pulses.table_num;
+        
+        // Aggregate ALL intentions into CSV
+        const csvString = this.aggregateToCSV(this.heldIntentions);
+        
+        // Create aggregated pulse
+        const aggregatedPulses = {
+          [`table_${tableNum}_orders`]: csvString,
+          order_count: String(this.heldIntentions.length)
+        };
+
+        // Also keep individual pulses (immutable)
+        this.heldIntentions.forEach((intention, idx) => {
+          Object.entries(intention.pulses).forEach(([key, value]) => {
+            aggregatedPulses[`order_${idx+1}_${key}`] = value;
+          });
+        });
+
+        this.addLog('reflect', `Reflected ${this.heldIntentions.length} orders to server`);
+
+        // Clear held intentions
+        this.heldIntentions = [];
+        
+        // Callback with result
+        onReflected(aggregatedPulses);
+        
+        return aggregatedPulses;
+      }
+
+      getState() {
+        return {
+          heldCount: this.heldIntentions.length,
+          log: this.log
+        };
+      }
+
+      addLog(type, message) {
+        this.log.push({ type, message, timestamp: new Date().toLocaleTimeString() });
+      }
+
+      clearLog() {
+        this.log = [];
+      }
+    }
+
+    // ========================================
+    // UI Component
+    // ========================================
+    function AggregationDemo() {
+      const [aggregator] = useState(() => new OrderAggregator());
+      const [heldCount, setHeldCount] = useState(0);
+      const [inputPulses, setInputPulses] = useState({});
+      const [outputPulses, setOutputPulses] = useState({});
+      const [log, setLog] = useState([]);
+
+      const updateState = () => {
+        const state = aggregator.getState();
+        setHeldCount(state.heldCount);
+        setLog([...state.log]);
+      };
+
+      const sendOrder = (dish, customer, table) => {
+        const pulses = {
+          item_dish: dish,
+          customer_name: customer,
+          table_num: String(table)
+        };
+
+        setInputPulses(pulses);
+        
+        aggregator.receive({
+          intentionId: 'INT_ORDER',
+          pulses
+        });
+        
+        updateState();
+      };
+
+      const reflectOrders = () => {
+        aggregator.reflect((pulses) => {
+          setOutputPulses(pulses);
+          updateState();
+        });
+      };
+
+      const reset = () => {
+        aggregator.heldIntentions = [];
+        aggregator.clearLog();
+        setHeldCount(0);
+        setInputPulses({});
+        setOutputPulses({});
+        setLog([]);
+      };
+
+      const renderPulses = (pulses) => {
+        return Object.entries(pulses).map(([key, value]) => (
+          <div key={key} className="pulse-box">
+            <span className="pulse-name">{key}:</span>
+            <span className="pulse-value">{value}</span>
+          </div>
+        ));
+      };
+
+      const renderCSV = (csvString) => {
+        return csvString.split('\n').map((row, idx) => (
+          <div key={idx} className="csv-row">
+            {row}
+          </div>
+        ));
+      };
+
+      return (
+        <div>
+          <h1>📦 Exercise 4.3: CSV Aggregation Pattern</h1>
+          
+          <div className="status-box">
+            <strong>💡 How It Works:</strong>
+            <ol style={{margin: '10px 0', paddingLeft: '20px'}}>
+              <li>Kitchen sends orders ONE AT A TIME</li>
+              <li>Object HOLDS each order (accumulates)</li>
+              <li>When ready, Object AGGREGATES all into CSV string</li>
+              <li>Server receives single CSV with all orders</li>
+            </ol>
+            <strong>Key:</strong> Object treats values as opaque strings (no parsing!)
+          </div>
+
+          <div className="section kitchen">
+            <h3>🍳 Kitchen (Sends Orders)</h3>
+            <button onClick={() => sendOrder('Pasta', 'Alice', 3)}>
+              Send: Pasta for Alice (Table 3)
+            </button>
+            <button onClick={() => sendOrder('Salad', 'Bob', 3)}>
+              Send: Salad for Bob (Table 3)
+            </button>
+            <button onClick={() => sendOrder('Burger', 'Carol', 3)}>
+              Send: Burger for Carol (Table 3)
+            </button>
+            <button onClick={() => sendOrder('Pizza', 'Dave', 5)}>
+              Send: Pizza for Dave (Table 5)
+            </button>
+            
+            {Object.keys(inputPulses).length > 0 && (
+              <div style={{marginTop: '15px'}}>
+                <strong>Last Order Sent:</strong>
+                {renderPulses(inputPulses)}
+              </div>
+            )}
+          </div>
+
+          <div className="section window">
+            <h3>📦 Delivery Window (Object)</h3>
+            <div style={{display: 'flex', alignItems: 'center', marginBottom: '15px'}}>
+              <strong>Held Orders:</strong>
+              <span className="held-count">{heldCount}</span>
+            </div>
+            
+            <button 
+              onClick={reflectOrders} 
+              disabled={heldCount === 0}
+              style={{
+                backgroundColor: heldCount > 0 ? '#4CAF50' : '#ccc'
+              }}
+            >
+              🔄 Aggregate & Reflect to Server
+            </button>
+            
+            <button onClick={reset} style={{backgroundColor: '#f44336'}}>
+              🔄 Reset
+            </button>
+
+            {heldCount > 0 && (
+              <div className="status-box" style={{marginTop: '15px', background: '#fff3e0'}}>
+                <strong>✨ Ready to aggregate {heldCount} order(s)</strong>
+                <p style={{margin: '10px 0 0 0', fontSize: '14px'}}>
+                  Will create CSV: "dish,customer,table" (one row per order)
+                </p>
+              </div>
+            )}
+          </div>
+
+          <div className="section server">
+            <h3>👨‍🍳 Server (Receives Aggregated Orders)</h3>
+            {Object.keys(outputPulses).length > 0 ? (
+              <div>
+                <strong>Received Pulses:</strong>
+                {renderPulses(outputPulses)}
+                
+                {outputPulses.table_3_orders && (
+                  <div style={{marginTop: '20px'}}>
+                    <strong>📋 Table 3 Orders (CSV):</strong>
+                    {renderCSV(outputPulses.table_3_orders)}
+                    <div style={{
+                      background: '#e8f5e9',
+                      padding: '15px',
+                      borderRadius: '4px',
+                      marginTop: '15px',
+                      border: '2px solid #4CAF50'
+                    }}>
+                      <strong style={{color: '#4CAF50'}}>✅ Pure Aggregation:</strong>
+                      <ul>
+                        <li>Object did NOT parse CSV</li>
+                        <li>Just concatenated strings with "\n"</li>
+                        <li>Treated values as opaque text</li>
+                        <li>ALL original pulses preserved (order_1_*, order_2_*, etc.)</li>
+                      </ul>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <p style={{color: '#666'}}>Waiting for orders...</p>
+            )}
+          </div>
+
+          <div className="section">
+            <h3>📋 Operation Log</h3>
+            <div className="operation-log">
+              {log.length === 0 ? (
+                <div style={{color: '#999'}}>No operations yet...</div>
+              ) : (
+                log.map((entry, idx) => (
+                  <div key={idx} className={`log-entry ${entry.type}`}>
+                    [{entry.timestamp}] {entry.message}
+                  </div>
+                ))
+              )}
+            </div>
+            <p style={{fontSize: '12px', color: '#666', marginTop: '10px'}}>
+              💡 Watch how multiple orders accumulate then aggregate into CSV
+            </p>
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.render(<AggregationDemo />, document.getElementById('root'));
+  </script>
+</body>
+</html>
