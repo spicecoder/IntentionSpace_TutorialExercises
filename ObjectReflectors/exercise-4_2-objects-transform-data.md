@@ -1346,7 +1346,7 @@ From the CPUX documentation:
 5. ❌ Check if quantity available (Design Node: business logic!)
 
 **Rule**: If it changes based on business rules, it's a Design Node. If it's just data reshaping, it's an Object.
-
+**Compose a Note** - Summaries the understandings of the exercise
 ---
 
 ## ➡️ Next Exercise

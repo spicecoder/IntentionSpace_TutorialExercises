@@ -703,6 +703,8 @@ Server receives aggregated CSV
 **Exercise 4.2**: Objects map pulse → pulse (immutable)  
 **Exercise 4.3**: Objects aggregate multiple → single (CSV)  
 
+**Compose a Note** - Summaries the understandings of the exercise
+
 **Next**: Exercise 4.4 will show Objects vs Design Nodes - when to aggregate (Object) vs when to process (DN)
 
 ---

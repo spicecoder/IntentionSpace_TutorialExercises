@@ -451,7 +451,7 @@ After completing the exercise, you should be able to:
 
 **Test yourself**: What happens if you send items but never mark them ready?  
 **Answer**: They stay in the Object indefinitely (temporary persistence). Object waits for gatekeeper conditions.
-
+**Compose a Note** - Summaries the understandings of the exercise
 ---
 
 ## 🎯 What Did We Learn?
