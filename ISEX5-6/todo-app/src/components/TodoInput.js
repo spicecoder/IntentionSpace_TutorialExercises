@@ -12,12 +12,18 @@ function TodoInput() {
   };
 
   return (
-    <div>
+    <div className="app">
+          <h1>To Do List</h1>
+
+    <div style={{ display: 'flex', gap: 10 }}>
       <input
         value={text}
         onChange={e => setText(e.target.value)}
+        placeholder="Enter todo"
       />
       <button onClick={handleAdd}>Add</button>
+    </div>
+    
     </div>
   );
 }
